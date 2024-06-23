@@ -1,0 +1,5 @@
+# Ignore Maven POM file
+pom.xml
+
+# Ignore Spring Boot application configuration
+application.yaml
