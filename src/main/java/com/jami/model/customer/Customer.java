@@ -1,4 +1,4 @@
-package com.jami.model;
+package com.jami.model.customer;
 
 import jakarta.persistence.*;
 import java.util.Objects;

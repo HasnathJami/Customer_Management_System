@@ -1,8 +1,10 @@
 package com.jami.controller;
 
-import com.jami.model.Customer;
+import com.jami.model.customer.Customer;
+import com.jami.model.response.ApiResponse;
 import com.jami.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,13 @@ public class CustomerController {
 
 
     @GetMapping("list")
-    public List<Customer> getCustomers() {
+    public ResponseEntity<ApiResponse> getCustomers() {
         return customerService.getCustomers();
+    }
+
+    @GetMapping("{customerId}")
+    public ResponseEntity<ApiResponse> getCustomer(@PathVariable("customerId") Integer id) {
+        return customerService.getCustomerById(id);
     }
 
 
@@ -36,18 +43,17 @@ public class CustomerController {
 //    }
 
     @PostMapping("add")
-    public void addCustomer(@RequestBody Customer customer) {
-        customerService.addCustomer(customer);
+    public ResponseEntity<ApiResponse> addCustomer(@RequestBody Customer customer) {
+        return customerService.addCustomer(customer);
     }
 
     @DeleteMapping("delete/{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Integer id) {
-        customerService.deleteCustomerById(id);
+    public ResponseEntity<ApiResponse> deleteCustomer(@PathVariable("customerId") Integer id) {
+        return customerService.deleteCustomerById(id);
     }
 
     @PutMapping("update/{customerId}")
-    public void updateCustomer(@PathVariable("customerId") Integer id, @RequestBody Customer customer) {
-        customer.setId(id);
-        customerService.updateCustomerById(id, customer);
+    public ResponseEntity<ApiResponse> updateCustomer(@PathVariable("customerId") Integer id, @RequestBody Customer customer) {
+        return customerService.updateCustomerById(id, customer);
     }
 }
