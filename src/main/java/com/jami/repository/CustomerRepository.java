@@ -1,4 +1,4 @@
-package com.jami.service;
+package com.jami.repository;
 
 import com.jami.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
