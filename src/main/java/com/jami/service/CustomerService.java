@@ -25,17 +25,19 @@ public class CustomerService {
         ApiResponse response;
         if (!customers.isEmpty()) {
             response = new ApiResponse(true, "Data Found", customerRepository.findAll());
+            return ResponseEntity.ok(response);
         } else {
             response = new ApiResponse(false, "Data Not Found", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+
     }
 
     public ResponseEntity<ApiResponse> addCustomer(Customer customer) {
         if (customer != null) {
             customerRepository.save(customer);
             ApiResponse response = new ApiResponse(true, "Customer Added Successfully", customer);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.ok(response);
         } else {
             ApiResponse response = new ApiResponse(false, "Please Insert Customer");
             return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -45,14 +47,14 @@ public class CustomerService {
 
     public ResponseEntity<ApiResponse> deleteCustomerById(Integer customerId) {
         Optional<Customer> existingCustomerOptional = customerRepository.findById(customerId);
+        ApiResponse response;
         if (existingCustomerOptional.isPresent()) {
             customerRepository.deleteById(customerId);
-            ApiResponse response = new ApiResponse(true, "Customer Deleted Successfully");
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            response = new ApiResponse(true, "Customer Deleted Successfully");
         } else {
-            ApiResponse response = new ApiResponse(false, "Customer not found");
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            response = new ApiResponse(false, "Customer not found");
         }
+        return ResponseEntity.ok(response);
     }
 
 
@@ -73,10 +75,10 @@ public class CustomerService {
             customerRepository.save(existingCustomer);
 
             ApiResponse response = new ApiResponse(true, "Customer Updated Successfully", existingCustomer);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.ok(response);
         } else {
             ApiResponse response = new ApiResponse(false, "Customer not found");
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.ok(response);
         }
     }
 
